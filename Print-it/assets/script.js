@@ -38,12 +38,33 @@ let numSlides = slides.length;
 for (let i = 0; i < numSlides; i++) {
 	// Create a new div element
 	let dot = document.createElement("div");
+
 	// Add the class "dot" to the new div element
 	dot.classList.add("dot");
+
 	// If its the first point, also add the class "dot_selected"
 	if (i === 0) {
 		dot.classList.add("dot_selected");
 	}
 	// Add the new div element to the parent container
 	dotsContainer.appendChild(dot);
+}
+
+// Retrieve all elements with the class 'dot'
+let dots = document.querySelectorAll(".dot");
+
+// Add event listeners to all dots
+for (let i = 0; i < dots.length; i++) {
+   dots[i].addEventListener("click", function() {
+       // Find the currently selected dot and remove the 'dot_selected' class
+       let selectedDot = document.querySelector(".dot.dot_selected");
+       if (selectedDot) {
+           selectedDot.classList.remove("dot_selected");
+       }
+
+       // Add the 'dot_selected' class to the clicked dot
+       this.classList.add("dot_selected");
+
+       console.log("Click on point " + (i + 1));
+   });
 }
