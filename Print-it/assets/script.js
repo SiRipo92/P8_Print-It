@@ -16,9 +16,42 @@ const slides = [
 		"tagLine":"Autocollants <span>avec découpe laser sur mesure</span>"
 	}
 ]
-// Add arrow click event
-let arrow_left = document.getElementsByClassName("arrow arrow_left")[0];
-let arrow_right = document.getElementsByClassName("arrow arrow_right")[0];
+//Global variables
+let currentSlide = 0;
+const dotsContainer = document.querySelector(".dots");
+const numSlides = slides.length;
+const arrow_left = document.querySelector(".arrow_left");
+const arrow_right = document.querySelector(".arrow_right");
+
+// Create dots for each slide that take on the appropriate classes, and add event listeners
+for (let i = 0; i < numSlides; i++) {
+	const createDots = document.createElement("div");
+	createDots.classList.add("dot");
+
+	// If its the first point, also add the class "dot_selected"
+	if (i === 0) {
+		createDots.classList.add("dot_selected");
+	}
+
+	createDots.addEventListener("click", function() {
+		// Find the currently selected dot and remove the 'dot_selected' class
+		let selectedDot = document.querySelector(".dot.dot_selected");
+		if (selectedDot) {
+			selectedDot.classList.remove("dot_selected");
+		}
+		// Add the 'dot_selected' class to the clicked dot
+		this.classList.add("dot_selected");
+
+		// Set the current slide to the index of the clicked dot
+		currentSlide = i;
+		console.log("Click on point " + (i + 1));
+	});
+
+	// Add the new div element to the parent container
+	dotsContainer.appendChild(createDots);
+}
+
+// Add arrow click event listeners
 
 arrow_left.addEventListener("click", function(){
 	console.log("left click");
@@ -28,43 +61,3 @@ arrow_right.addEventListener("click", function(){
 	console.log("right click");
 });
 
-// Recover parent element with the class "dots"
-let dotsContainer = document.querySelector(".dots");
-
-// Use the length of slides in table to determine the number of points to create
-let numSlides = slides.length;
-
-// Create a loop to create the number of points
-for (let i = 0; i < numSlides; i++) {
-	// Create a new div element
-	let dot = document.createElement("div");
-
-	// Add the class "dot" to the new div element
-	dot.classList.add("dot");
-
-	// If its the first point, also add the class "dot_selected"
-	if (i === 0) {
-		dot.classList.add("dot_selected");
-	}
-	// Add the new div element to the parent container
-	dotsContainer.appendChild(dot);
-}
-
-// Retrieve all elements with the class 'dot'
-let dots = document.querySelectorAll(".dot");
-
-// Add event listeners to all dots
-for (let i = 0; i < dots.length; i++) {
-   dots[i].addEventListener("click", function() {
-       // Find the currently selected dot and remove the 'dot_selected' class
-       let selectedDot = document.querySelector(".dot.dot_selected");
-       if (selectedDot) {
-           selectedDot.classList.remove("dot_selected");
-       }
-
-       // Add the 'dot_selected' class to the clicked dot
-       this.classList.add("dot_selected");
-
-       console.log("Click on point " + (i + 1));
-   });
-}
