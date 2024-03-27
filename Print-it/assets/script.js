@@ -30,12 +30,21 @@ for (let i = 0; i < numSlides; i++) {
 	const createDots = document.createElement("div");
 	createDots.classList.add("dot");
 
-	// If its the first point, also add the class "dot_selected"
+	// If it's the first point, also add the class "dot_selected"
 	if (i === 0) {
 		createDots.classList.add("dot_selected");
 	}
 
 	createDots.addEventListener("click", function() {
+		// Find currently selected dot and remove "dot_selected" class
+		let selectedDot = document.querySelector(".dot.dot_selected");
+		if (selectedDot) {
+			selectedDot.classList.remove("dot_selected");
+		}
+		
+		//Add the 'dot_selected' class to the clicked dot
+		this.classList.add("dot_selected");
+
 		// Set the current slide to the index of the clicked dot
 		currentSlide = i;
 		console.log("Click on point " + (i + 1));
@@ -52,7 +61,7 @@ for (let i = 0; i < numSlides; i++) {
 
 arrow_left.addEventListener("click", function(){
 	// Decrease the index of the current slide
-	currentSlide = (currentSlide - 1);
+	currentSlide = (currentSlide - 1 + numSlides) % numSlides;
 
 	// Update the banner image and tagline
 	updateBanner();
@@ -62,7 +71,7 @@ arrow_left.addEventListener("click", function(){
 
 arrow_right.addEventListener("click", function(){
 	// Increase the index of the current slide
-	currentSlide = (currentSlide + 1);
+	currentSlide = (currentSlide + 1) % numSlides;
 
 	// Update the banner image and tagline
 	updateBanner();
